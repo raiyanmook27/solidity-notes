@@ -22,9 +22,9 @@ Feel free to add or correct me on anything. Please spare the numbering and forma
 6. enum types are not part of the ABI, they are just a solidity abstraction ✅
 7. Delete keyword is simply a reassignment of elements to their default values (ie.zero) ✅
 8. .call bypasses function existence check, type checking and argument packing ✅
-9. The evm considers a call to non-existing contract to always succeed, so there is a check of extcodesize > 0 when making an external call. But call, staticcall, delegatecall, send, transfer do not include this check
-10. On receiving funds from a selfdestruct / coinbase miner reward, the contract can not react to it, and it doesn’t require a contract to have receive or fallback functions.
-11. extcodesize > 0 check is skipped by the compiler if the function call expects return data. the ABI decoder will catch the case of a non-existing contract Because such calls are followed up by abi decoding the return data, which has a check for `returndatasize` is being at least a non-zero number. So for empty contracts, they would always revert in the end.
+9. The evm considers a call to non-existing contract to always succeed, so there is a check of extcodesize > 0 when making an external call. But call, staticcall, delegatecall, send, transfer do not include this check ✅
+10. On receiving funds from a selfdestruct / coinbase miner reward, the contract can not react to it, and it doesn’t require a contract to have receive or fallback functions. ✅
+11. extcodesize > 0 check is skipped by the compiler if the function call expects return data. the ABI decoder will catch the case of a non-existing contract Because such calls are followed up by abi decoding the return data, which has a check for `returndatasize` is being at least a non-zero number. So for empty contracts, they would always revert in the end. ⁉️
 12. Always send 1 wei to precompiled contracts to activate them when testing in private blockchains, otherwise it may lead to OOG
 13. Functions called from within an `unchecked` block do not inherit the property. Bitwise operators do not perform overflow or underflow checks
 14. After a failed call, Do not assume that the error message is coming directly from the called contract: The error might have happened deeper down in the call chain and the called contract just forwarded it (bubbling up of errors)
