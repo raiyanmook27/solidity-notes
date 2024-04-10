@@ -14,14 +14,14 @@ Feel free to add or correct me on anything. Please spare the numbering and forma
 
 ![Untitled](https://user-images.githubusercontent.com/93861625/234314831-00fe6e9c-8330-4ed1-944d-c729dd074a70.png)
 
-1. Division result is auto rounded towards zero
-2. Division by zero causes panic error, escapes unchecked
-3. Always check the return value of send. Send fails if call stack depth is at 1024(can be forced by the caller)
-4. Using low level functions to call a contract = handing over control to it
-5. Before using delegatecall, ensure that storage layout is in same order in both contracts
-6. enum types are not part of the ABI, they are just a solidity abstraction
-7. Delete keyword is simply a reassignment of elements to their default values (ie.zero)
-8. .call bypasses function existence check, type checking and argument packing
+1. Division result is auto rounded towards zero ✅
+2. Division by zero causes panic error, escapes unchecked ✅
+3. Always check the return value of send. Send fails if call stack depth is at 1024(can be forced by the caller) ✅
+4. Using low level functions to call a contract = handing over control to it ✅
+5. Before using delegatecall, ensure that storage layout is in same order in both contracts ✅
+6. enum types are not part of the ABI, they are just a solidity abstraction ✅
+7. Delete keyword is simply a reassignment of elements to their default values (ie.zero) ✅
+8. .call bypasses function existence check, type checking and argument packing 
 9. The evm considers a call to non-existing contract to always succeed, so there is a check of extcodesize > 0 when making an external call. But call, staticcall, delegatecall, send, transfer do not include this check
 10. On receiving funds from a selfdestruct / coinbase miner reward, the contract can not react to it, and it doesn’t require a contract to have receive or fallback functions.
 11. extcodesize > 0 check is skipped by the compiler if the function call expects return data. the ABI decoder will catch the case of a non-existing contract Because such calls are followed up by abi decoding the return data, which has a check for `returndatasize` is being at least a non-zero number. So for empty contracts, they would always revert in the end.
